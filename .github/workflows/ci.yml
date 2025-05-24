@@ -20,19 +20,16 @@ jobs:
       fail-fast: false
       matrix:
         php:
-          - '8.0'
-          - '8.1'
+          - '8.2'
+          - '8.3'
+          - '8.4'
         laravel:
-          - 8.*
-          - 9.*
+          - 12,*
         prefer:
-          - 'prefer-lowest'
           - 'prefer-stable'
         include:
-          - laravel: '8.*'
-            testbench: '6.*'
-          - laravel: '9.*'
-            testbench: '7.*'
+          - laravel: '12.*'
+            testbench: '11.*'
 
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} --${{ matrix.prefer }}
 
@@ -46,7 +43,7 @@ jobs:
         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
         coverage: pcov
 
-    - uses: actions/cache@v3.0.5
+    - uses: julia-actions/cache@v2
       name: Cache dependencies
       with:
         path: ~/.composer/cache/files

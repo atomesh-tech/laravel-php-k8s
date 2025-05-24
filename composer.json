@@ -20,8 +20,14 @@
         }
     ],
     "require": {
-        "renoki-co/php-k8s": "^3.7"
+        "renoki-co/php-k8s": "^3.9"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/atomesh-tech/php-k8s"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "RenokiCo\\LaravelK8s\\": "src/"
@@ -36,15 +42,15 @@
         "test": "vendor/bin/phpunit"
     },
     "require-dev": {
-        "mockery/mockery": "^1.5",
-        "orchestra/testbench": "^6.28|^7.0",
-        "orchestra/testbench-core": "^6.28|^7.0",
-        "phpunit/phpunit": "^9.5.21"
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^6.28|^7.0|^10.0",
+        "orchestra/testbench-core": "^6.28|^7.0|^10.0",
+        "phpunit/phpunit": "^9.5.21|^11.0"
     },
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [

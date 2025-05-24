@@ -14,7 +14,7 @@ class KubernetesCluster
      *
      * @var \RenokiCo\PhpK8s\KubernetesCluster
      */
-    protected $cluster;
+    protected PhpK8sCluster $cluster;
 
     /**
      * Create a new Kubernetes Cluster.
@@ -33,7 +33,7 @@ class KubernetesCluster
      * @param  string  $connection
      * @return \RenokiCo\LaravelK8s\KubernetesCluster
      */
-    public function connection(string $connection)
+    public function connection(string $connection): self
     {
         $this->loadFromConfig(
             config('k8s.connections')[$connection] ?? config('k8s.default')
@@ -48,7 +48,7 @@ class KubernetesCluster
      * @param  array  $config
      * @return void
      */
-    protected function loadFromConfig(array $config)
+    protected function loadFromConfig(array $config): void
     {
         switch ($config['driver'] ?? null) {
             case 'kubeconfig': $this->configureWithKubeConfigFile($config); break;
@@ -66,7 +66,7 @@ class KubernetesCluster
      * @param  array  $config
      * @return void
      */
-    protected function configureWithKubeConfigFile(array $config)
+    protected function configureWithKubeConfigFile(array $config): void
     {
         $this->cluster = PhpK8sCluster::fromKubeConfigYamlFile(
             $config['path'], $config['context']
@@ -79,7 +79,7 @@ class KubernetesCluster
      * @param  array  $config
      * @return void
      */
-    protected function configureWithHttpAuth(array $config)
+    protected function configureWithHttpAuth(array $config): void
     {
         $this->cluster = PhpK8sCluster::fromUrl($config['host']);
 
@@ -111,7 +111,7 @@ class KubernetesCluster
      * @param  array  $config
      * @return void
      */
-    protected function configureWithToken(array $config)
+    protected function configureWithToken(array $config): void
     {
         $this->cluster = PhpK8sCluster::fromUrl($config['host']);
 
@@ -140,7 +140,7 @@ class KubernetesCluster
      * @param  array  $config
      * @return void
      */
-    protected function configureInCluster(array $config)
+    protected function configureInCluster(array $config): void
     {
         $this->cluster = PhpK8sCluster::inClusterConfiguration(
             $config['host'] ?? 'https://kubernetes.default.svc'
@@ -154,7 +154,7 @@ class KubernetesCluster
      * @param  array  $config
      * @return void
      */
-    protected function configureWithKubeConfigVariable(array $config)
+    protected function configureWithKubeConfigVariable(array $config): void
     {
         $this->cluster = PhpK8sCluster::fromKubeConfigVariable($config['context']);
     }
@@ -164,7 +164,7 @@ class KubernetesCluster
      *
      * @return \RenokiCo\PhpK8s\KubernetesCluster
      */
-    public function getCluster()
+    public function getCluster(): PhpK8sCluster
     {
         return $this->cluster;
     }
@@ -172,11 +172,11 @@ class KubernetesCluster
     /**
      * Proxy the calls onto the cluster.
      *
-     * @param  string  $method
-     * @param  array  $parameters
+     * @param string $method
+     * @param array $parameters
      * @return mixed
      */
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters): mixed
     {
         return $this->getCluster()->{$method}(...$parameters);
     }
@@ -184,11 +184,11 @@ class KubernetesCluster
     /**
      * Proxy the static calls onto the cluster.
      *
-     * @param  string  $method
-     * @param  array  $parameters
+     * @param string $method
+     * @param array $parameters
      * @return mixed
      */
-    public static function __callStatic($method, $parameters)
+    public static function __callStatic(string $method, array $parameters): mixed
     {
         return PhpK8sCluster::{$method}(...$parameters);
     }

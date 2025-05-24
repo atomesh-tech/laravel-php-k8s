@@ -11,7 +11,7 @@ class LaravelK8sServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->publishes([
             __DIR__.'/../config/k8s.php' => config_path('k8s.php'),
@@ -36,7 +36,7 @@ class LaravelK8sServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
